@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SynTutor Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Landing / login screen based on the Figma PDF frame. -->
+  <main id="landingScreen" class="landing-screen">
+    <header class="landing-header">
+      <div class="landing-logo">SynTutor</div>
+      <button class="login-btn" type="button">LOG IN</button>
+    </header>
+
+    <section class="hero" aria-labelledby="heroTitle">
+      <h1 id="heroTitle">SynTutor</h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p>Establish grammatical competence through<br />Syntactical structure</p>
+      <button id="launchButton" class="launch-btn" type="button">Launch SynTutor</button>
+    </section>
+
+    <button class="theme-icon" type="button" aria-label="Theme toggle placeholder">
+      <span aria-hidden="true">◔</span>
+    </button>
+  </main>
+
+  <!-- Main prototype interface. -->
+  <main id="appScreen" class="app-screen is-hidden">
+    <header class="topbar">
+      <button class="menu-btn" type="button" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="app-brand">SynTutor</div>
+    </header>
+
+    <section class="workspace" aria-label="SynTutor workspace">
+      <div class="left-column">
+        <div class="chat-title">Untitled chat...</div>
+
+        <form id="sentenceForm" class="input-card" autocomplete="off">
+          <input
+            id="sentenceInput"
+            type="text"
+            list="sampleSentences"
+            placeholder="Enter or paste text here"
+            aria-label="Enter or paste a sentence"
+          />
+          <datalist id="sampleSentences">
+            <option value="Driver should taken the Cadillac"></option>
+            <option value="The driver should have taken the cadillac"></option>
+          </datalist>
+          <button id="clearButton" class="clear-btn is-hidden" type="button" aria-label="Clear sentence">×</button>
+        </form>
+
+        <section class="tree-card" aria-label="Syntax tree display">
+          <div id="emptyTreeState" class="empty-tree-state">
+            <svg class="empty-tree-icon" viewBox="0 0 120 120" role="img" aria-label="Syntax tree placeholder">
+              <circle cx="60" cy="28" r="14"></circle>
+              <circle cx="28" cy="84" r="14"></circle>
+              <circle cx="92" cy="84" r="14"></circle>
+              <path d="M52 40 36 70M68 40l16 30"></path>
+            </svg>
+            <p class="empty-title">No Syntax tree to generate yet!</p>
+            <p class="empty-copy">Add your text to see the syntax tree here</p>
+          </div>
+
+          <svg id="syntaxTree" class="syntax-tree is-hidden" aria-label="Interactive constituency tree"></svg>
+
+          <div class="zoom-controls" aria-hidden="true">
+            <button type="button">+</button>
+            <button type="button">−</button>
+            <button type="button"></button>
+          </div>
+        </section>
+      </div>
+
+      <aside id="xaiPanel" class="xai-card" aria-label="XAI structural explanation panel">
+        <div id="emptyXaiState" class="empty-xai-state">
+          <svg class="book-icon" viewBox="0 0 120 100" role="img" aria-label="Ready for analysis icon">
+            <path d="M18 20h32c8 0 10 7 10 13v47c0-7-6-13-15-13H18z"></path>
+            <path d="M102 20H70c-8 0-10 7-10 13v47c0-7 6-13 15-13h27z"></path>
+          </svg>
+          <p>Ready for Analysis</p>
+        </div>
+
+        <div id="xaiContent" class="xai-content is-hidden">
+          <h2>XAI Structural explanation</h2>
+          <p id="xaiExplanation"></p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
