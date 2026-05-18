@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SynTutor Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Landing / login screen based on the Figma PDF frame. -->
+  <main id="landingScreen" class="landing-screen">
+    <header class="landing-header">
+      <button id="themeToggle" class="theme-icon" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <span aria-hidden="true">☾</span>
+      </button>
+      <button id="loginButton" class="login-btn" type="button">Login</button>
+    </header>
+
+    <section class="hero" aria-labelledby="heroTitle">
+      <h1 id="heroTitle">SynTutor</h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p>Establish grammatical competence through<br />Syntactic Structure</p>
+      <button id="launchButton" class="launch-btn" type="button" aria-label="Launch SynTutor">
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+  </main>
+
+  <!-- Main prototype interface. -->
+  <main id="appScreen" class="app-screen is-hidden">
+    <button
+      id="menuButton"
+      class="bookmark-nav-control"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="appMenu"
+    >
+      <span></span>
+      <span></span>
+    </button>
+
+    <aside id="appMenu" class="app-menu is-hidden" aria-label="Application menu">
+      <button id="menuLoginButton" class="menu-item" type="button">Login</button>
+      <div class="menu-setting" role="group" aria-label="Dark mode setting">
+        <span class="menu-setting-label">Dark mode</span>
+        <button
+          id="menuThemeToggle"
+          class="theme-switch"
+          type="button"
+          role="switch"
+          aria-checked="false"
+          aria-label="Turn on dark mode"
+        >
+          <span class="theme-switch-knob" aria-hidden="true"></span>
+        </button>
+      </div>
+    </aside>
+
+    <section class="workspace" aria-label="SynTutor workspace">
+      <div class="left-column">
+        <form id="sentenceForm" class="input-card" autocomplete="off">
+          <textarea
+            id="sentenceInput"
+            rows="2"
+            placeholder="Enter or paste a sentence or paragraph here"
+            aria-label="Enter or paste a sentence or paragraph"
+          ></textarea>
+          <button id="viewInputButton" class="input-view-btn is-hidden" type="button" aria-label="View full input content" title="View full input">↗</button>
+          <button id="clearButton" class="clear-btn is-hidden" type="button" aria-label="Clear text">×</button>
+        </form>
+
+        <section id="sentenceSelector" class="sentence-selector is-hidden" aria-label="Sentence selector">
+          <button
+            id="sentenceSelectButton"
+            class="sentence-select-button"
+            type="button"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="sentencePopover"
+          >
+            <span id="sentenceSelectLabel" class="sentence-select-label">Select sentence</span>
+            <span id="sentenceSelectedPreview" class="sentence-selected-preview">No sentence selected yet</span>
+            <span id="sentenceSelectCount" class="sentence-select-count"></span>
+          </button>
+        </section>
+
+        <section id="comparisonPanel" class="comparison-panel is-hidden" aria-label="Comparative error analysis">
+          <div class="comparison-head">
+            <p>Comparative error analysis</p>
+            <span>The corrected sentence has its own syntactical structure.</span>
+          </div>
+          <div id="comparisonList" class="comparison-list"></div>
+        </section>
+
+        <div id="sentenceModalOverlay" class="sentence-modal-overlay is-hidden" aria-hidden="true">
+          <div id="sentencePopover" class="sentence-popover" role="dialog" aria-modal="true" aria-labelledby="sentencePopoverTitle">
+            <div class="sentence-popover-head">
+              <div>
+                <p id="sentencePopoverTitle">Choose one sentence</p>
+                <span id="sentencePopoverSummary" class="sentence-popover-summary">Detected sentences from your paragraph</span>
+              </div>
+              <button id="sentencePopoverClose" class="sentence-popover-close" type="button" aria-label="Close sentence selector">×</button>
+            </div>
+            <div id="sentenceList" class="sentence-list"></div>
+          </div>
+        </div>
+
+        <div id="inputModalOverlay" class="input-modal-overlay is-hidden" aria-hidden="true">
+          <div class="input-modal" role="dialog" aria-modal="true" aria-labelledby="inputModalTitle">
+            <div class="input-modal-head">
+              <div>
+                <p id="inputModalTitle">Full input content</p>
+                <span>Review or edit the complete passage without expanding the main input box.</span>
+              </div>
+              <button id="inputModalClose" class="input-modal-close" type="button" aria-label="Close full input view">×</button>
+            </div>
+            <textarea id="inputModalTextarea" class="input-modal-textarea" aria-label="Full input content"></textarea>
+            <div class="input-modal-actions">
+              <button id="inputModalDone" class="input-modal-done" type="button">Done</button>
+            </div>
+          </div>
+        </div>
+
+
+        <section class="tree-card" aria-label="Syntax tree display">
+          <div id="emptyTreeState" class="empty-tree-state">
+            <svg class="empty-tree-icon" viewBox="0 0 120 120" role="img" aria-label="Syntax tree placeholder">
+              <circle cx="60" cy="28" r="14"></circle>
+              <circle cx="28" cy="84" r="14"></circle>
+              <circle cx="92" cy="84" r="14"></circle>
+              <path d="M52 40 36 70M68 40l16 30"></path>
+            </svg>
+            <p id="emptyTreeTitle" class="empty-title">No Syntax tree to generate yet!</p>
+            <p id="emptyTreeCopy" class="empty-copy">Add your text to see the syntax tree here</p>
+          </div>
+
+          <svg id="syntaxTree" class="syntax-tree is-hidden" aria-label="Interactive pannable constituency tree"></svg>
+
+          <button id="treeFullscreenButton" class="tree-fullscreen-btn" type="button" aria-label="Open syntax tree fullscreen" title="Fullscreen tree">⛶</button>
+
+          <div id="zoomControls" class="zoom-controls" aria-label="Syntax tree zoom controls">
+            <button id="zoomInButton" type="button" aria-label="Zoom in">+</button>
+            <button id="zoomOutButton" type="button" aria-label="Zoom out">−</button>
+            <button id="zoomResetButton" type="button" aria-label="Reset zoom and pan">⟳</button>
+          </div>
+        </section>
+      </div>
+
+      <aside class="xai-side" aria-label="Right-side syntax support area">
+        <section id="xaiPanel" class="xai-card" aria-label="XAI structural explanation panel">
+          <div id="emptyXaiState" class="empty-xai-state">
+          <svg class="book-icon" viewBox="0 0 120 100" role="img" aria-label="Ready for analysis icon">
+            <path d="M18 20h32c8 0 10 7 10 13v47c0-7-6-13-15-13H18z"></path>
+            <path d="M102 20H70c-8 0-10 7-10 13v47c0-7 6-13 15-13h27z"></path>
+          </svg>
+          <p>Ready for Analysis</p>
+        </div>
+
+          <div id="xaiContent" class="xai-content is-hidden">
+            <p id="xaiExplanation"></p>
+          </div>
+        </section>
+
+        <details id="lexicalLegend" class="lexical-legend">
+          <summary>
+            <span>Lexical Category Legend</span>
+            <span class="legend-toggle-mark" aria-hidden="true">＋</span>
+          </summary>
+          <dl class="legend-grid">
+            <div><dt>S</dt><dd>Sentence or clause</dd></div>
+            <div><dt>NP</dt><dd>Noun phrase</dd></div>
+            <div><dt>VP</dt><dd>Verb phrase</dd></div>
+            <div><dt>PP</dt><dd>Prepositional phrase</dd></div>
+            <div><dt>ADJP</dt><dd>Adjective phrase</dd></div>
+            <div><dt>ADVP</dt><dd>Adverb phrase</dd></div>
+            <div><dt>Det</dt><dd>Determiner</dd></div>
+            <div><dt>N</dt><dd>Noun</dd></div>
+            <div><dt>V</dt><dd>Verb</dd></div>
+            <div><dt>Pron</dt><dd>Pronoun</dd></div>
+            <div><dt>Adj</dt><dd>Adjective</dd></div>
+            <div><dt>Adv</dt><dd>Adverb</dd></div>
+            <div><dt>P</dt><dd>Preposition</dd></div>
+            <div><dt>Conj</dt><dd>Conjunction</dd></div>
+            <div><dt>INTJ</dt><dd>Interjection</dd></div>
+            <div><dt>Poss</dt><dd>Possessive marker</dd></div>
+            <div><dt>SBAR</dt><dd>Subordinate clause</dd></div>
+          </dl>
+        </details>
+      </aside>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
